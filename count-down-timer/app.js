@@ -1,7 +1,7 @@
 // 1.reference for all btns
 // 2. refernece for all input fields
 // 3. capture click for start
- 
+
 // 4. capture  click for reset
 
 // 1
@@ -17,41 +17,47 @@ const secInput = document.getElementById('sec')
 let timeInSeconds = 0
 let timerId = null
 let init = null
-
+let showPause = true
 startBtn.addEventListener('click', (e) => {
-   let hrs = hrsInput.value
-   let mins = minsInput.value
-   let sec = secInput.value
+    let hrs = hrsInput.value || 0
+    let mins = minsInput.value || 0
+    let sec = secInput.value || 0
 
-   timeInSeconds = parseInt(hrs) * 3600 + parseInt(mins) * 60 + parseInt(sec)
-   init = timeInSeconds
-   console.log(timeInSeconds)
-   timer(timeInSeconds)
+    timeInSeconds = parseInt(hrs) * 3600 + parseInt(mins) * 60 + parseInt(sec)
+    init = timeInSeconds
+    timer(timeInSeconds)
 })
 
 function timer() {
-    if(timeInSeconds === 0) return
+    if (timeInSeconds === 0) return
 
     timerId = setTimeout(() => {
         timeInSeconds--
-        console.log(timeInSeconds, '--time in sec')
-        secInput.value =  timeInSeconds % 60
-        console.log()
+        secInput.value = timeInSeconds % 60
+        hrsInput.value = Math.floor(timeInSeconds / 3600);
+        minsInput.value = Math.floor((timeInSeconds % 3600) / 60);
         timer(timeInSeconds)
     }, 1000)
 }
 
 resetBtn.addEventListener('click', () => {
+    secInput.value = 0
+    hrsInput.value = 0
+    minsInput.value = 0
     clearTimeout(timerId)
 })
 
-const sec = () => {
-   
-}
-// timeinseconds - (timeinseconds -60)
+pauseBtn.addEventListener('click', () => {
+    continueBtn.style.display = 'inline-block'
+    pauseBtn.style.display = 'none'
+    clearTimeout(timerId)
+})
 
-// 120 
 
-// 119
+continueBtn.addEventListener('click', () => {
+    continueBtn.style.display = 'none'
+    pauseBtn.style.display = 'inline-block'
+    timer()
+})
 
-// 59
+

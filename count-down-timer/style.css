@@ -1,3 +1,7 @@
 .timer__label {
     display: flex;
 }
+
+.display_none {
+    display: none;
+}
